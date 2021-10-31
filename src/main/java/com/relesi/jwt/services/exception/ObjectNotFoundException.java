@@ -1,0 +1,1 @@
+package com.relesi.jwt.services.exception;public class ObjectNotFoundException extends RuntimeException{    public ObjectNotFoundException(String msg){        super(msg);    }}
