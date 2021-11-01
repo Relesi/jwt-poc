@@ -31,11 +31,16 @@ public class User implements Serializable {
 
     }
 
-    public User(String id, String name, String email) {
+    public User(String id, String name, String email, ProfileEnum profileEnum) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.profile = profileEnum;
     }
+
+    public User(String id, String name, String email) {
+    }
+
 
     public String getId() {
         return id;
