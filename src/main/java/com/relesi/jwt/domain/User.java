@@ -1,14 +1,17 @@
 package com.relesi.jwt.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.relesi.jwt.enums.ProfileEnum;
+import com.relesi.jwt.enums.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Document(collection = "user")
 public class User implements Serializable {
@@ -21,16 +24,19 @@ public class User implements Serializable {
     private String email;
     @JsonIgnore
     private String password;
-    private ProfileEnum profile;
+    private Profile profile;
 
     @DBRef(lazy = true)
     private List<Admin> admin = new ArrayList<>();
 
-    public User() {
 
+    private Set<Integer> profiles = new HashSet<>();
+
+    public User() {
+        addProfile(Profile.CLIENTE);
     }
 
-    public User(String id, String name, String email, String password, ProfileEnum profile) {
+    public User(String id, String name, String email, String password, Profile profile) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -70,11 +76,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public ProfileEnum getProfile() {
+    public Set<Profile> getProfiles() {
+        return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(Profile profile) {
+        profiles.add(profile.getCod());
+    }
+
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(ProfileEnum profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
