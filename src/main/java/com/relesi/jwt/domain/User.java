@@ -70,7 +70,6 @@ public class User implements Serializable {
         return senha;
     }
 
-
     public ProfileEnum getProfile() {
         return profile;
     }
