@@ -1,5 +1,6 @@
 package com.relesi.jwt.config;
 
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,16 +33,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private JWTUtil jwtUtil;
+//    @Autowired
+//    private JWTUtil jwtUtil;
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**"
+            "/h2-console/**",
+            "/admin/title-search/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/title-search/**",
-
+            "/admin/title-search/**"
 
     };
 
@@ -61,25 +63,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-            http.headers().frameOptions().disable();
-        }
+//        if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+//            http.headers().frameOptions().disable();
+//        }
 
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-                .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+//                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+//                .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
-        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+//        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+//        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+//    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -90,8 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
