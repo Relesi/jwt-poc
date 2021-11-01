@@ -1,13 +1,13 @@
-package com.relesi.jwt;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class JwtApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.relesi.jwt;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class JwtApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}

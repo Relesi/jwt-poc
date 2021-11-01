@@ -28,7 +28,7 @@ public class JwtTokenUtil {
     private Long expiration;
 
     /**
-     * Obtém o username (email) contido no token JWT.
+     * Gets the username (email) contained in the JWT token.
      *
      * @param token
      * @return String
@@ -45,7 +45,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * Retorna a data de expiração de um token JWT.
+     * Return date of expiration a token JWT.
      *
      * @param token
      * @return Date
@@ -62,7 +62,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * Cria um novo token (refresh).
+     * Create a new token (refresh).
      *
      * @param token
      * @return String
@@ -72,7 +72,8 @@ public class JwtTokenUtil {
         try {
             Claims claims = getClaimsFromToken(token);
             claims.put(CLAIM_KEY_CREATED, new Date());
-            refreshedToken = gerarToken(claims);
+            refreshedToken = generateToken(claims);
+
         } catch (Exception e) {
             refreshedToken = null;
         }
@@ -80,33 +81,32 @@ public class JwtTokenUtil {
     }
 
     /**
-     * Verifica e retorna se um token JWT é válido.
+     * Checks and returns if a JWT token is valid.
      *
      * @param token
      * @return boolean
      */
-    public boolean tokenValido(String token) {
-        return !tokenExpirado(token);
+    public boolean tokenValid(String token) {
+        return !tokenExpired(token);
     }
 
     /**
-     * Retorna um novo token JWT com base nos dados do usuários.
+     * Returns a new JWT token based on user data.
      *
      * @param userDetails
      * @return String
      */
-    public String obterToken(UserDetails userDetails) {
+    public String getToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         userDetails.getAuthorities().forEach(authority -> claims.put(CLAIM_KEY_ROLE, authority.getAuthority()));
         claims.put(CLAIM_KEY_CREATED, new Date());
 
-        return gerarToken(claims);
+        return generateToken(claims);
     }
 
     /**
-     * Realiza o parse do token JWT para extrair as informações contidas no
-     * corpo dele.
+     * Parse the JWT token to extract the information contained in the body.
      *
      * @param token
      * @return Claims
@@ -122,36 +122,37 @@ public class JwtTokenUtil {
     }
 
     /**
-     * Retorna a data de expiração com base na data atual.
+     * Returns the expiration date based on the current date.
      *
      * @return Date
      */
-    private Date gerarDataExpiracao() {
+    private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
     /**
-     * Verifica se um token JTW está expirado.
+     * Checks if a JTW token is expired.
      *
      * @param token
      * @return boolean
      */
-    private boolean tokenExpirado(String token) {
-        Date dataExpiracao = this.getExpirationDateFromToken(token);
-        if (dataExpiracao == null) {
+    private boolean tokenExpired(String token) {
+        Date expirationDate = this.getExpirationDateFromToken(token);
+        if (expirationDate == null) {
             return false;
         }
-        return dataExpiracao.before(new Date());
+
+        return expirationDate.before(new Date());
     }
 
     /**
-     * Gera um novo token JWT contendo os dados (claims) fornecidos.
+     * Generates a new JWT token containing the data (claims) provided.
      *
      * @param claims
      * @return String
      */
-    private String gerarToken(Map<String, Object> claims) {
-        return Jwts.builder().setClaims(claims).setExpiration(gerarDataExpiracao())
+    private String generateToken(Map<String, Object> claims) {
+        return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
