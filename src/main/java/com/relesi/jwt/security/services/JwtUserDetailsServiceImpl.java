@@ -2,31 +2,33 @@ package com.relesi.jwt.security.services;
 
 import java.util.Optional;
 
+import com.relesi.jwt.domain.User;
+import com.relesi.jwt.security.JwtUserFactory;
+import com.relesi.jwt.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.relesi.modernizationbiometric.api.entities.Funcionario;
-import com.relesi.modernizationbiometric.api.security.JwtUserFactory;
-import com.relesi.modernizationbiometric.api.services.FuncionarioService;
 
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private FuncionarioService funcionarioService;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Funcionario> funcionario = funcionarioService.buscarPorEmail(username);
+    @Autowired
+    private UserService userService;
 
-		if (funcionario.isPresent()) {
-			return JwtUserFactory.create(funcionario.get());
-		}
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = Optional.ofNullable(userService.findByEmail(username));
 
-		throw new UsernameNotFoundException("Email não encontrado.");
-	}
+
+        if (user.isPresent()) {
+            return JwtUserFactory.create(user.get());
+        }
+
+        throw new UsernameNotFoundException("Email not found.");
+    }
 
 }

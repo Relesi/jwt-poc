@@ -1,5 +1,6 @@
 package com.relesi.jwt.domain;
 
+import com.relesi.jwt.enums.ProfileEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,11 +18,14 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
+    private String senha;
     private int idade;
     private int sexo;
 
+    private ProfileEnum profile;
+
     @DBRef(lazy = true)
-    private List<Admin> posts = new ArrayList<>();
+    private List<Admin> admin = new ArrayList<>();
 
     public User() {
 
@@ -57,12 +61,29 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public List<Admin> getPosts() {
-        return posts;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setPosts(List<Admin> posts) {
-        this.posts = posts;
+
+    public ProfileEnum getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileEnum profile) {
+        this.profile = profile;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public List<Admin> getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(List<Admin> admin) {
+        this.admin = admin;
     }
 
     @Override
@@ -91,9 +112,19 @@ public class User implements Serializable {
         return true;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", idade=" + idade +
+                ", sexo=" + sexo +
+                ", profile=" + profile +
+                ", admin=" + admin +
+                '}';
+    }
 }
 
 

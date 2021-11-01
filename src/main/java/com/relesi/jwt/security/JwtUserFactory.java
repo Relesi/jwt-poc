@@ -5,11 +5,12 @@ package com.relesi.jwt.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.relesi.jwt.domain.User;
+import com.relesi.jwt.enums.ProfileEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.relesi.modernizationbiometric.api.entities.Funcionario;
-import com.relesi.modernizationbiometric.api.enums.PerfilEnum;
+
 
 
 
@@ -19,25 +20,26 @@ public class JwtUserFactory {
 	}
 
 	/**
-	 * Converte e gera um JwtUser com base nos dados de um funcionário.
+	 * Converts and generates a JwtUser based on data from a User.
 	 * 
-	 * @param funcionario
+	 * @param user
 	 * @return JwtUser
 	 */
-	public static JwtUser create(Funcionario funcionario) {
-		return new JwtUser(funcionario.getId(), funcionario.getEmail(), funcionario.getSenha(),
-				mapToGrantedAuthorities(funcionario.getPerfil()));
+	public static JwtUser create(User user) {
+		return new JwtUser(user.getId(), user.getEmail(), user.getSenha(),
+				mapToGrantedAuthorities(user.getProfile()));
+
 	}
 
 	/**
-	 * Converte o perfil do usuário para o formato utilizado pelo Spring Security.
+	 * Converts the user profile to the format used by Spring Security.
 	 * 
-	 * @param perfilEnum
+	 * @param profileEnum
 	 * @return List<GrantedAuthority>
 	 */
-	private static List<GrantedAuthority> mapToGrantedAuthorities(PerfilEnum perfilEnum) {
+	private static List<GrantedAuthority> mapToGrantedAuthorities(ProfileEnum profileEnum) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(perfilEnum.toString()));
+		authorities.add(new SimpleGrantedAuthority(profileEnum.toString()));
 		return authorities;
 	}
 

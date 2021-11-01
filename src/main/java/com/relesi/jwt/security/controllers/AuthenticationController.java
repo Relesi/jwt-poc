@@ -7,6 +7,10 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.relesi.jwt.response.Response;
+import com.relesi.jwt.security.dto.JwtAuthenticationDto;
+import com.relesi.jwt.security.dto.TokenDto;
+import com.relesi.jwt.security.utils.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-
-
-import com.relesi.modernizationbiometric.api.response.Response;
-import com.relesi.modernizationbiometric.api.security.dto.JwtAuthenticationDto;
-import com.relesi.modernizationbiometric.api.security.dto.TokenDto;
-import com.relesi.modernizationbiometric.api.security.utils.JwtTokenUtil;
-
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
@@ -53,7 +50,7 @@ public class AuthenticationController {
 	private UserDetailsService userDetailsService;
 
 	/**
-	 * Gera e retorna um novo token JWT.
+	 * Generates and returns a new JWT token.
 	 * 
 	 * @param authenticationDto
 	 * @param result
@@ -85,7 +82,7 @@ public class AuthenticationController {
 	}
 
 	/**
-	 * Gera um novo token com uma nova data de expiração.
+	 * Generates a new token with a new expiration date.
 	 * 
 	 * @param request
 	 * @return ResponseEntity<Response<TokenDto>>
