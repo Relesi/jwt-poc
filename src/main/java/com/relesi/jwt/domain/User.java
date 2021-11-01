@@ -1,5 +1,6 @@
 package com.relesi.jwt.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.relesi.jwt.enums.ProfileEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection="user")
+@Document(collection = "user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,10 +19,8 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
-    private String senha;
-    private int idade;
-    private int sexo;
-
+    @JsonIgnore
+    private String password;
     private ProfileEnum profile;
 
     @DBRef(lazy = true)
@@ -31,16 +30,13 @@ public class User implements Serializable {
 
     }
 
-    public User(String id, String name, String email, ProfileEnum profileEnum) {
+    public User(String id, String name, String email, String password, ProfileEnum profile) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.profile = profileEnum;
+        this.password = password;
+        this.profile = profile;
     }
-
-    public User(String id, String name, String email) {
-    }
-
 
     public String getId() {
         return id;
@@ -66,8 +62,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public ProfileEnum getProfile() {
@@ -78,9 +78,6 @@ public class User implements Serializable {
         this.profile = profile;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 
     public List<Admin> getAdmin() {
         return admin;
@@ -122,9 +119,7 @@ public class User implements Serializable {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", idade=" + idade +
-                ", sexo=" + sexo +
+                ", password='" + password + '\'' +
                 ", profile=" + profile +
                 ", admin=" + admin +
                 '}';

@@ -78,10 +78,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-//    }
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
