@@ -29,7 +29,6 @@ public class User implements Serializable {
     @DBRef(lazy = true)
     private List<Admin> admin = new ArrayList<>();
 
-
     private Set<Integer> profiles = new HashSet<>();
 
     public User() {
