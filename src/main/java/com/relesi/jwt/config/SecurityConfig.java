@@ -58,11 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     };
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-//                "/swagger-ui.html", "/webjars/**");
-//    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+       web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+                "/swagger-ui.html", "/webjars/**");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -82,10 +82,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-//    }
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+       auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+   }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
