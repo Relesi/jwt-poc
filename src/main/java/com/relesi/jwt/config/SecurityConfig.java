@@ -48,16 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/admin/full-search/**",
             "/users/**"
-
-
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/users/**",
             "/clientes",
             "/auth/forgot/**"
-
-
     };
 
     @Override
