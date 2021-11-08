@@ -16,7 +16,7 @@ public class UserSpringSecurity implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserSpringSecurity(){
+    public UserSpringSecurity() {
 
     }
 
@@ -27,9 +27,7 @@ public class UserSpringSecurity implements UserDetails {
         this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
     }
 
-
-
-    public String getId(){
+    public String getId() {
         return id;
     }
 
@@ -66,5 +64,9 @@ public class UserSpringSecurity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean hasRole(Profile profile) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
     }
 }
