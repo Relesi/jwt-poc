@@ -2,6 +2,7 @@ package com.relesi.jwt.dto;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
@@ -11,12 +12,16 @@ public class UserNewDTO implements Serializable {
 
     @Id
     private String id;
+    @NotEmpty(message = "Mandatory Field")
     private String name;
 
-    @NotEmpty(message = "Mandatory")
+    @NotEmpty(message = "Mandatory Field")
     private String password;
+    @NotEmpty(message = "Mandatory Field")
+    @Email(message="Email inválido")
     private String email;
 
+    @NotEmpty(message = "Mandatory Field")
     private Integer type;
 
 
