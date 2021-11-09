@@ -1,5 +1,6 @@
 package com.relesi.jwt.dto;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Email;
@@ -12,13 +13,16 @@ public class UserNewDTO implements Serializable {
 
     @Id
     private String id;
+
+    @Length(min = 5, max = 120, message = "Name must contain between 5 and 120 characters...")
     @NotEmpty(message = "Mandatory Field")
     private String name;
 
     @NotEmpty(message = "Mandatory Field")
     private String password;
+
     @NotEmpty(message = "Mandatory Field")
-    @Email(message="Email inválido")
+    @Email(message = "Invalid email address...")
     private String email;
 
     @NotEmpty(message = "Mandatory Field")
@@ -35,9 +39,6 @@ public class UserNewDTO implements Serializable {
         this.email = email;
         this.type = type;
     }
-
-//    public UserDTO(User obj) {
-//    }
 
     public String getId() {
         return id;
