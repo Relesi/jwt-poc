@@ -2,7 +2,6 @@ package com.relesi.jwt.resources;
 
 import com.relesi.jwt.security.JWTUtil;
 import com.relesi.jwt.security.UserSpringSecurity;
-import com.relesi.jwt.services.UserService;
 import com.relesi.jwt.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
