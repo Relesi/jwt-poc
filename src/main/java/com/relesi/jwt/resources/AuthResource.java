@@ -19,7 +19,7 @@ public class AuthResource {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
         UserSpringSecurity user = UserServiceImpl.authenticated(); //pegando usuario logado
         String token = jwtUtil.generateToken(user.getUsername());
