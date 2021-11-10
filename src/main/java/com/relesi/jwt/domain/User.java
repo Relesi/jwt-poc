@@ -1,6 +1,7 @@
 package com.relesi.jwt.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.relesi.jwt.dto.AuthorDTO;
 import com.relesi.jwt.enums.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -30,6 +31,8 @@ public class User implements Serializable {
     private List<Admin> admin = new ArrayList<>();
 
     private Set<Integer> profiles = new HashSet<>();
+
+    private AuthorDTO author;
 
     public User() {
         addProfile(Profile.CLIENTE);
@@ -98,6 +101,14 @@ public class User implements Serializable {
 
     public void setAdmin(List<Admin> admin) {
         this.admin = admin;
+    }
+
+    public AuthorDTO getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorDTO author) {
+        this.author = author;
     }
 
     @Override
